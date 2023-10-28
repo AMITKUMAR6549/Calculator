@@ -1,6 +1,7 @@
 package com.example.calculator;
 
 import android.os.Bundle;
+import android.text.InputFilter;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -18,22 +19,37 @@ public class MainActivity extends AppCompatActivity {
     private boolean lastCalculation = false; // Flag to track if the last calculation was completed
 
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         tvInput = findViewById(R.id.tvInput);
+
+        // Set the maximum length of the TextView to a large value (or remove it)
+        tvInput.setFilters(new InputFilter[]{new InputFilter.LengthFilter(5000)}); // Set a large value or remove it
     }
 
+
     public void onDigit(View view) {
+        String currentInput = tvInput.getText().toString();
+
         if (lastCalculation) {
             // If the last operation was completed, start a new calculation
-            tvInput.setText("");
+            currentInput = "";
             lastCalculation = false; // Reset the flag
         }
-        tvInput.append(((Button) view).getText());
+
+        // Clear the "Error" message and append the digit
+        if (currentInput.equals("Error")) {
+            currentInput = "";
+        }
+
+        currentInput += ((Button) view).getText();
+        tvInput.setText(currentInput);
         lastNumeric = true;
     }
+
 
     public void onClear(View view) {
         tvInput.setText("");
@@ -54,8 +70,8 @@ public class MainActivity extends AppCompatActivity {
 
         char lastChar = input.isEmpty() ? ' ' : input.charAt(input.length() - 1);
 
+        // Check if the last character is an operator, and if so, replace it with the new operator
         if (isOperator(lastChar)) {
-            // If the last character is an operator, replace it with the new operator
             input = input.substring(0, input.length() - 1) + ((Button) view).getText();
         } else {
             // Append the new operator
@@ -67,6 +83,7 @@ public class MainActivity extends AppCompatActivity {
         lastDot = false;
         lastCalculation = false; // Reset the lastCalculation flag
     }
+
 
 
 
@@ -114,14 +131,19 @@ public class MainActivity extends AppCompatActivity {
 
 
     public void onPercentage(View view) {
-        if (lastNumeric) {
-            String input = tvInput.getText().toString();
-            double number = Double.parseDouble(input);
+        String currentInput = tvInput.getText().toString();
+
+        if (currentInput.isEmpty() || !lastNumeric || isOperatorAdded(currentInput)) {
+            // Handle the case where there's no valid input to calculate the percentage
+            tvInput.setText("Error");
+        } else {
+            double number = Double.parseDouble(currentInput);
             double percentage = number / 100;
             tvInput.setText(String.valueOf(percentage));
             lastDot = true; // Allow decimal point after percentage calculation
         }
     }
+
 
     public void onDoubleZero(View view) {
         tvInput.append("00");
@@ -140,6 +162,7 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+
     private String removeZeroAfterDot(String result) {
         String value = result;
         if (result.contains(".0")) {
@@ -147,6 +170,7 @@ public class MainActivity extends AppCompatActivity {
         }
         return value;
     }
+
 
     private boolean isOperatorAdded(String value) {
         return !(value.isEmpty()) && (value.contains("/")

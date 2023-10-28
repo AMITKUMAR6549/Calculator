@@ -1,4 +1,5 @@
 <shape xmlns:android="http://schemas.android.com/apk/res/android">
-    <solid android:color="#3F51B5" /> <!-- Set the background color to orange -->
-    <corners android:radius="150dp" /> <!-- Set the corner radius to make it slightly rounded -->
+    <solid android:color="#FFFFFF" /> <!-- Set the background color to orange -->
+    <corners android:radius="150dp" />
+    <!-- Set the corner radius to make it slightly rounded -->
 </shape>
