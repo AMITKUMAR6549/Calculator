@@ -56,5 +56,7 @@ This is a simple Android calculator app developed in Java, designed to perform b
 
 Enjoy using this simple calculator app for your everyday arithmetic needs!
 
-<img src="s1.jpg" alt="Alt Text">
+<img src="s2.jpg" alt="Alt Text" width="200" height="450"> <img src="s3.jpg" alt="Alt Text" width="200" height="450"> <img src="s1.jpg" alt="Alt Text" width="200" height="450">
+
+
 
