@@ -55,3 +55,6 @@ This is a simple Android calculator app developed in Java, designed to perform b
 - You can start a new calculation by pressing the "C" button.
 
 Enjoy using this simple calculator app for your everyday arithmetic needs!
+
+<img src="s1.jpg" alt="Alt Text">
+
